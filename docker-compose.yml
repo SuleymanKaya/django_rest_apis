@@ -1,0 +1,11 @@
+version: '3.9'
+services:
+  django_rest_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["sh", "-c", "python src/manage.py runserver localhost:8000"]
+    volumes:
+      - ./:/app
+    ports:
+      - "8001:8000"
