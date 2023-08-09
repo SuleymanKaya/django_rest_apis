@@ -15,7 +15,7 @@ RUN echo "suleyman_kaya:admin" | chpasswd
 # Install dependencies:
 COPY requirements/ requirements/
 RUN pip3 install --upgrade pip
-RUN pip3 install --no-cache-dir -r requirements/base.txt
+RUN pip3 install --no-cache-dir -r requirements/local.txt
 
 # Change to the new user
 USER suleyman_kaya
