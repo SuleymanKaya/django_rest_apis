@@ -1,11 +1,35 @@
 version: '3.9'
 services:
+
+  postgres_db:
+    image: postgres:14.2
+    environment:
+      DB_NAME: django
+      DB_USER: test_db
+      DB_PASSWORD: test_db
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "test_db" ]
+      interval: 3s
+      timeout: 10s
+      retries: 2
+      start_period: 2s
+
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    command: ["sh", "-c", "python src/manage.py runserver 0.0.0.0:8000"]
+    command: [
+      "sh", "-c", "python src/manage.py wait_for_db &&
+      python src/manage.py migrate &&
+      python src/manage.py runserver 0.0.0.0:8000"
+    ]
+    env_file: .env
     volumes:
       - ./:/app
     ports:
       - "8001:8000"
+    depends_on:
+      postgres_db:
+        condition: service_healthy

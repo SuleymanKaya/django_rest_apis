@@ -12,7 +12,11 @@ django==4.2.4
     # via
     #   -r requirements/base.in
     #   djangorestframework
+django-environ==0.10.0
+    # via -r requirements/base.in
 djangorestframework==3.14.0
+    # via -r requirements/base.in
+psycopg2-binary==2.9.7
     # via -r requirements/base.in
 pytz==2023.3
     # via
