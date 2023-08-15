@@ -4,9 +4,9 @@ services:
   postgres_db:
     image: postgres:14.2
     environment:
-      DB_NAME: django
-      DB_USER: test_db
-      DB_PASSWORD: test_db
+      POSTGRES_USER: test_db
+      POSTGRES_PASSWORD: test_db
+      POSTGRES_DB: django
     ports:
       - "5433:5432"
     healthcheck:
