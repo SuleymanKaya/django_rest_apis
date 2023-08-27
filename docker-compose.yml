@@ -3,14 +3,16 @@ services:
 
   postgres_db:
     image: postgres:14.2
+    volumes:
+      - postgres:/var/lib/postgresql/data/
     environment:
-      POSTGRES_USER: test_db
-      POSTGRES_PASSWORD: test_db
-      POSTGRES_DB: django
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
-      - "5433:5432"
+      - "5434:5432"
     healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "test_db" ]
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
       interval: 3s
       timeout: 10s
       retries: 2
@@ -21,9 +23,10 @@ services:
       context: .
       dockerfile: Dockerfile
     command: [
-      "sh", "-c", "python src/manage.py wait_for_db &&
-      python src/manage.py migrate &&
-      python src/manage.py runserver 0.0.0.0:8000"
+      "sh", "-c", "cd src &&
+      python manage.py wait_for_db &&
+      python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000"
     ]
     env_file: .env
     volumes:
@@ -33,3 +36,6 @@ services:
     depends_on:
       postgres_db:
         condition: service_healthy
+
+volumes:
+  postgres:
