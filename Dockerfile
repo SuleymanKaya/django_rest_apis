@@ -13,7 +13,7 @@ RUN useradd -ms /bin/bash suleyman_kaya
 RUN echo "suleyman_kaya:admin" | chpasswd
 
 # Install dependencies:
-COPY requirements/ requirements/
+COPY requirements requirements/
 RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir -r requirements/local.txt
 

@@ -23,7 +23,10 @@ test.db
 # virtualenv
 # Environments
 .env
-/venv/
+venv/
 
 # Cache
 __pycache__/
+
+# sqlite
+db.sqlite3
