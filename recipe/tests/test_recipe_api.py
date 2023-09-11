@@ -9,7 +9,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from core.models import Recipe
+from core.models import Recipe, Tag
 
 from recipe.serializers import RecipeSerializer, RecipeDetailSerializer
 
@@ -220,3 +220,94 @@ class PrivateRecipeApiTests(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         self.assertTrue(Recipe.objects.filter(id=recipe.id).exists())
+
+    def test_create_recipe_with_new_tags(self):
+        """
+        Test creating a recipe with new tags
+        """
+        payload = {
+            "title": "Cheesecake",
+            "time_minutes": 18,
+            "price": Decimal('8.25'),
+            "link": "www.cheesecake.com",
+            "description": "Cheesecake is a sweet dessert consisting of one or more layers",
+            "tags": [{"name": "sweet"}, {"name": "dessert"}]
+        }
+        response = self.client.post(RECIPE_URL, payload, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        recipe = Recipe.objects.filter(user=self.user)
+        self.assertEqual(recipe.count(), 1)
+        tags = recipe[0].tags
+        self.assertEqual(tags.count(), 2)
+        for tag in payload['tags']:
+            self.assertTrue(tags.filter(name=tag['name'], user=self.user).exists())
+
+    def test_create_recipe_with_existing_tags(self):
+        """
+        Test creating a recipe with existing tags
+        """
+        tag1 = Tag.objects.create(user=self.user, name="sweet")
+        payload = {
+            "title": "Cheesecake",
+            "time_minutes": 18,
+            "price": Decimal('8.25'),
+            "link": "www.cheesecake.com",
+            "description": "Cheesecake is a sweet dessert consisting of one or more layers",
+            "tags": [{"name": "sweet"}, {"name": "dessert"}]
+        }
+        response = self.client.post(RECIPE_URL, payload, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        recipe = Recipe.objects.filter(user=self.user)
+        self.assertEqual(recipe.count(), 1)
+        tags = recipe[0].tags
+        self.assertEqual(tags.count(), 2)
+        self.assertIn(tag1, tags.all())
+        for tag in payload['tags']:
+            self.assertTrue(tags.filter(name=tag['name'], user=self.user).exists())
+
+    def test_create_tag_on_update(self):
+        """
+        Test creating a tag on update
+        """
+        recipe = create_recipe(user=self.user)
+        payload = {'tags': [{'name': 'sweet'}]}
+        url = detail_url(recipe.id)
+        response = self.client.patch(url, payload, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        new_tag = Tag.objects.get(user=self.user, name='sweet')
+        self.assertIn(new_tag, recipe.tags.all())
+
+    def test_update_recipe_assign_tag(self):
+        """
+        Test updating a recipe and assigning a tag
+        """
+        tag_sweet = Tag.objects.create(user=self.user, name="sweet")
+        recipe = create_recipe(user=self.user)
+        recipe.tags.add(tag_sweet)
+
+        tag_launch = Tag.objects.create(user=self.user, name="launch")
+        payload = {'tags': [{'name': 'launch'}]}
+        url = detail_url(recipe.id)
+        response = self.client.patch(url, payload, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertNotIn(tag_sweet, recipe.tags.all())
+        self.assertIn(tag_launch, recipe.tags.all())
+
+    def test_clear_recipe_tags(self):
+        """
+        Test clearing a recipe tags
+        """
+        tag_sweet = Tag.objects.create(user=self.user, name="sweet")
+        recipe = create_recipe(user=self.user)
+        recipe.tags.add(tag_sweet)
+
+        payload = {'tags': []}
+        url = detail_url(recipe.id)
+        response = self.client.patch(url, payload, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(recipe.tags.count(), 0)
