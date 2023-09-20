@@ -16,6 +16,8 @@ RUN echo "suleyman_kaya:admin" | chpasswd
 COPY requirements requirements/
 RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir -r requirements/local.txt
+
+RUN mkdir -p /app/static
 RUN chown -R suleyman_kaya:suleyman_kaya /app/static
 RUN chmod -R 755 /app/static
 
