@@ -8,7 +8,7 @@ ENV PYTHONUNBUFFERED 1
 # Set work directory in the container
 WORKDIR /app
 
-# Create a new user 'suleyman_kaya' and set a password 'mypassword'
+# Create a new user 'suleyman_kaya' and set a password 'admin'
 RUN useradd -ms /bin/bash suleyman_kaya
 RUN echo "suleyman_kaya:admin" | chpasswd
 
@@ -18,9 +18,9 @@ RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir -r requirements/local.txt
 
 RUN mkdir -p /app/static
-RUN chown -R suleyman_kaya:suleyman_kaya /app/static
+RUN #chown -R suleyman_kaya:suleyman_kaya /app/static
 RUN chmod -R 755 /app/static
 
 
 # Change to the new user
-USER suleyman_kaya
+#USER suleyman_kaya
