@@ -21,6 +21,5 @@ RUN mkdir -p /app/static
 RUN chown -R suleyman_kaya:suleyman_kaya /app
 RUN chmod -R 755 /app/static
 
-
- Change to the new user
+# Change to the new user
 USER suleyman_kaya
