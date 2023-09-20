@@ -8,18 +8,7 @@ ENV PYTHONUNBUFFERED 1
 # Set work directory in the container
 WORKDIR /app
 
-# Create a new user 'suleyman_kaya' and set a password 'mypassword'
-RUN useradd -ms /bin/bash suleyman_kaya
-RUN echo "suleyman_kaya:admin" | chpasswd
-
 # Install dependencies:
 COPY requirements requirements/
 RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir -r requirements/local.txt
-
-# Create the necessary directories and Set ownership of these directories to suleyman_kaya
-RUN mkdir -p /app/media/uploads/recipe/ &&  \
-    chown -R suleyman_kaya:suleyman_kaya /app/media/
-
-# Change to the new user
-USER suleyman_kaya
