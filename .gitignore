@@ -30,5 +30,3 @@ __pycache__/
 
 # sqlite
 db.sqlite3
-
-static/media/*
