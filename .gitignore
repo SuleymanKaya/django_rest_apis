@@ -30,3 +30,7 @@ __pycache__/
 
 # sqlite
 db.sqlite3
+
+# static files
+static/media/*
+static/static/*
