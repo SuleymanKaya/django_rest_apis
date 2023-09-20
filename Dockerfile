@@ -17,11 +17,11 @@ COPY requirements requirements/
 RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir -r requirements/local.txt
 
-# Create the necessary directories and Set ownership of these directories to suleyman_kaya
-RUN mkdir -p /app/static/static &&  \
-    mkdir -p /app/static/media && \
-    chown -R suleyman_kaya:suleyman_kaya /app/static && \
-    chmod -R 755 /app/static
+## Create the necessary directories and Set ownership of these directories to suleyman_kaya
+#RUN mkdir -p /app/static/static &&  \
+#    mkdir -p /app/static/media && \
+#    chown -R suleyman_kaya:suleyman_kaya /app/static && \
+#    chmod -R 755 /app/static
 
 
 # Change to the new user
