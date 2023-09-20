@@ -12,6 +12,10 @@ WORKDIR /app
 RUN useradd -ms /bin/bash suleyman_kaya
 RUN echo "suleyman_kaya:admin" | chpasswd
 
+# Create necessary directories and set ownership
+RUN mkdir -p /app/static/media/uploads/recipe
+RUN chown -R suleyman_kaya:suleyman_kaya /app/static
+
 # Install dependencies:
 COPY requirements requirements/
 RUN pip3 install --upgrade pip
