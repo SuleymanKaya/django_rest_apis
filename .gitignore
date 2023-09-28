@@ -24,6 +24,7 @@ test.db
 # Environments
 .env
 venv/
+.env.deploy
 
 # Cache
 __pycache__/
