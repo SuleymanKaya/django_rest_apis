@@ -25,9 +25,11 @@ from drf_spectacular.views import (
 )
 
 from config.settings import PANEL_NAME
+from core import views as core_views
 
 urlpatterns = [
     path(f'{PANEL_NAME}/', admin.site.urls),
+    path('api/health-check/', core_views.health_check, name='health-check'),
     path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),
     path('', SpectacularSwaggerView.as_view(url_name='api-schema'), name='api-docs'),
     path('redoc/', SpectacularRedocView.as_view(url_name='api-schema'), name='redoc'),
