@@ -6,10 +6,6 @@ Overview
 ========
 This repository, titled "django_rest_apis", is a testament to my proficiency in creating robust and scalable Django-based RESTful APIs. The recipe project showcases a combination of modern web technologies and best practices. I have created an advanced REST API with Python, Django REST Framework, and Docker using Test Driven Development (TDD).
 
-The Recipe Project Page
-========
-Project Page: `The Recipe Project <http://ec2-3-67-71-212.eu-central-1.compute.amazonaws.com/>`_
-
 Technologies Used
 =================
 1. **Django (Version 4.2.4)**: A high-level Python web framework that encourages rapid design and a clean, pragmatic design.
