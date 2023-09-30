@@ -29,7 +29,7 @@ from config.settings import PANEL_NAME
 urlpatterns = [
     path(f'{PANEL_NAME}/', admin.site.urls),
     path('api/schema/', SpectacularAPIView.as_view(), name='api-schema'),
-    path('api/docs/', SpectacularSwaggerView.as_view(url_name='api-schema'), name='api-docs'),
+    path('', SpectacularSwaggerView.as_view(url_name='api-schema'), name='api-docs'),
     path('redoc/', SpectacularRedocView.as_view(url_name='api-schema'), name='redoc'),
     path('api/user/', include('user.urls')),
     path('api/recipe/', include('recipe.urls')),

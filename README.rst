@@ -4,16 +4,17 @@ Django Rest APIs for Recipe Project by Suleyman Kaya
 
 Overview
 ========
-This repository, titled "django_rest_apis", is a testament to Suleyman Kaya's proficiency in creating robust and scalable Django-based RESTful APIs. The project showcases a blend of modern web technologies and best practices.
+This repository, titled "django_rest_apis", is a testament to my proficiency in creating robust and scalable Django-based RESTful APIs. The recipe project showcases a combination of modern web technologies and best practices. I have created an advanced REST API with Python, Django REST Framework, and Docker using Test Driven Development (TDD).
 
 Technologies Used
 =================
 1. **Django (Version 4.2.4)**: A high-level Python web framework that encourages rapid design and a clean, pragmatic design.
 2. **Django Rest Framework (DRF) (Version 3.14.0)**: A powerful and flexible toolkit for building Web APIs.
 3. **Docker (Version 3.9)**: Used for containerization, ensuring consistent environments from development to production.
-4. **uWSGI (Version 2.0.22)**: An application server that serves the Django application, ensuring efficient resource utilization and scalability.
-5. **NGINX (Version: 1.25.2)**: A high-performance HTTP server and reverse proxy, also used for HTTP caching, load balancing, and more.
-6. **GitHub Actions**: Implemented for continuous integration and deployment, reflecting a modern development workflow.
+4. **Postgres (Version 13.12)**: A powerful, open-source object-relational database system.
+5. **uWSGI (Version 2.0.22)**: An application server that serves the Django application, ensuring efficient resource utilization and scalability.
+6. **NGINX (Version: 1.25.2)**: A high-performance HTTP server and reverse proxy, also used for HTTP caching, load balancing, and more.
+7. **GitHub Actions**: Implemented for continuous integration and deployment, reflecting a modern development workflow.
 
 Key Functionalities
 ===================
