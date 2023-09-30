@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  postgres_db_deploy:
+    image: postgres:13-alpine
+    volumes:
+      - postgres-deploy-data:/var/lib/postgresql/data
+    env_file:
+      - .env # if not specified, it will use .env
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - PGPORT=5435
+    ports:
+      - "5435:5435"
+
+  app_deploy:
+    build:
+      context: .
+      dockerfile: Dockerfile.deploy # if not specified, it will use Dockerfile
+    volumes:
+      - ./:/app
+      - static-data:/static_files
+    environment:
+      - DJANGO_ENV_FILE=.env
+      - DEBUG=${DEBUG}
+      - DB_HOST=postgres_db_deploy
+      - DB_PORT=5435
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
+    ports:
+      - "8085:8085"
+    depends_on:
+      - postgres_db_deploy
+
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    depends_on:
+      - app_deploy
+    ports:
+      - "80:8000"
+    volumes:
+      - static-data:/static_files
+
+volumes:
+  postgres-deploy-data:
+  static-data:
