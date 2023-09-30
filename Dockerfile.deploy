@@ -15,11 +15,4 @@ RUN pip3 install --upgrade pip
 RUN pip3 install --no-cache-dir -r requirements/prod.txt
 RUN chmod -R +x scripts
 
-# Create a new user called
-RUN useradd -m uwsgi_user
-
-# Switch to the new user. All commands after this will be run as this user.
-USER uwsgi_user
-
-
 CMD ["sh", "scripts/run.sh"]

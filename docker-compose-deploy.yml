@@ -21,7 +21,7 @@ services:
       dockerfile: Dockerfile.deploy # if not specified, it will use Dockerfile
     volumes:
       - ./:/app
-      - static-data:/static/static/web
+      - static-data:/static_files
     environment:
       - DJANGO_ENV_FILE=.env
       - DEBUG=${DEBUG}
@@ -46,7 +46,7 @@ services:
     ports:
       - "80:8000"
     volumes:
-      - static-data:/static/static/vol
+      - static-data:/static_files
 
 volumes:
   postgres-deploy-data:

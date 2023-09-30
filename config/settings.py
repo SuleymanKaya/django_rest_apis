@@ -33,7 +33,6 @@ DEBUG = os.environ.get('DEBUG', False)
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',')
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -128,11 +127,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 STATIC_URL = '/static/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/static/')
+STATIC_ROOT = os.path.join(BASE_DIR, '/static_files/static')
 
 # Media files (user-uploaded content)
 MEDIA_URL = '/static/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, '/static_files/media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -148,3 +147,6 @@ REST_FRAMEWORK = {
 SPECTACULAR_SETTINGS = {
     'COMPONENT_SPLIT_REQUEST': True,
 }
+
+# Admin panel configuration
+PANEL_NAME = os.environ.get('PANEL_NAME', "admin")
